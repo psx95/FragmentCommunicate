@@ -16,10 +16,13 @@
 
 package com.example.android.fragmentcommunicate;
 
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -33,10 +36,18 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     static final String STATE_FRAGMENT = "state_of_fragment";
     // to save the user choice
     private int radioButtonChoice = 2; // DEFAULT NONE (2)
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"OnCreate");
+        if (savedInstanceState != null && savedInstanceState.containsKey(SimpleFragment.CHOICE)) {
+            Log.d(TAG,"Retrieved value "+savedInstanceState.getInt(SimpleFragment.CHOICE));
+            radioButtonChoice = savedInstanceState.getInt(SimpleFragment.CHOICE);
+        } else {
+            Log.d(TAG,"Instance state was null");
+        }
         setContentView(R.layout.activity_main);
         // Get the button for opening and closing the fragment.
         mButton = findViewById(R.id.open_button);
@@ -110,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the state of the fragment (true=open, false=closed).
         savedInstanceState.putBoolean(STATE_FRAGMENT, isFragmentDisplayed);
+        Log.d(TAG,"SAVING STATE "+radioButtonChoice);
+        savedInstanceState.putInt(SimpleFragment.CHOICE, radioButtonChoice);
         super.onSaveInstanceState(savedInstanceState);
     }
 

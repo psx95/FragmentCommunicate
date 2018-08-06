@@ -38,7 +38,7 @@ public class SimpleFragment extends Fragment {
     private static final int YES = 0;
     private static final int NO = 1;
     private static final int NONE = 2;
-    private static final String CHOICE = "choice";
+    static final String CHOICE = "choice";
     public int userRadioButtonChoice = NONE;
 
     OnFragmentInteractionListener onFragmentInteractionListener;
