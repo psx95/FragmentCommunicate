@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
      */
     public void displayFragment() {
         // Instantiate the fragment.
-        SimpleFragment simpleFragment = SimpleFragment.newInstance();
+        SimpleFragment simpleFragment = SimpleFragment.newInstance(radioButtonChoice);
         // Get the FragmentManager and start a transaction.
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager

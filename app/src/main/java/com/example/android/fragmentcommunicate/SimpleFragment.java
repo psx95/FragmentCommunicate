@@ -38,6 +38,7 @@ public class SimpleFragment extends Fragment {
     private static final int YES = 0;
     private static final int NO = 1;
     private static final int NONE = 2;
+    private static final String CHOICE = "choice";
     public int userRadioButtonChoice = NONE;
 
     OnFragmentInteractionListener onFragmentInteractionListener;
@@ -62,6 +63,16 @@ public class SimpleFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_simple,
                 container, false);
         final RadioGroup radioGroup = rootView.findViewById(R.id.radio_group);
+
+        if (getArguments()!=null && getArguments().containsKey(CHOICE)) {
+            userRadioButtonChoice = getArguments().getInt(CHOICE);
+            if (userRadioButtonChoice != NONE) {
+                // SINCE 0 IS FOR YES AND YES IS PLACED AT POS 0
+                // SIMILARLY 1 IS FOR NO AND NO IS PLACED AT POS 1
+                // THIS APPROACH WONT WORK OTHERWISE.
+                radioGroup.check(radioGroup.getChildAt(userRadioButtonChoice).getId());
+            }
+        }
 
         // Set the radioGroup onCheckedChanged listener.
         radioGroup.setOnCheckedChangeListener(
@@ -107,7 +118,11 @@ public class SimpleFragment extends Fragment {
         }
     }
 
-    public static SimpleFragment newInstance() {
-        return new SimpleFragment();
+    public static SimpleFragment newInstance(int choice) {
+        SimpleFragment simpleFragment = new SimpleFragment();
+        Bundle args = new Bundle();
+        args.putInt(CHOICE,choice);
+        simpleFragment.setArguments(args);
+        return simpleFragment;
     }
 }
