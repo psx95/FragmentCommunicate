@@ -22,14 +22,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
     private Button mButton;
     private boolean isFragmentDisplayed = false;
 
     // Saved instance state key.
     static final String STATE_FRAGMENT = "state_of_fragment";
+    // to save the user choice
+    private int radioButtonChoice = 2; // DEFAULT NONE (2)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,5 +111,11 @@ public class MainActivity extends AppCompatActivity {
         // Save the state of the fragment (true=open, false=closed).
         savedInstanceState.putBoolean(STATE_FRAGMENT, isFragmentDisplayed);
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRadioButtonChoice(int choice) {
+        radioButtonChoice = choice;
+        Toast.makeText(this, "Choice	is	" + Integer.toString(choice), Toast.LENGTH_SHORT).show();
     }
 }

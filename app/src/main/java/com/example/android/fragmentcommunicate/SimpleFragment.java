@@ -16,6 +16,7 @@
 
 package com.example.android.fragmentcommunicate;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -36,6 +37,10 @@ public class SimpleFragment extends Fragment {
     // 2 = default (no choice). Using only 0 and 1.
     private static final int YES = 0;
     private static final int NO = 1;
+    private static final int NONE = 2;
+    public int userRadioButtonChoice = NONE;
+
+    OnFragmentInteractionListener onFragmentInteractionListener;
 
     public SimpleFragment() {
         // Required empty public constructor
@@ -70,12 +75,18 @@ public class SimpleFragment extends Fragment {
                         switch (index) {
                             case YES: // User chose "Yes".
                                 textView.setText(R.string.yes_message);
+                                userRadioButtonChoice = YES;
+                                onFragmentInteractionListener.onRadioButtonChoice(YES);
                                 break;
                             case NO: // User chose "No".
                                 textView.setText(R.string.no_message);
+                                userRadioButtonChoice = NO;
+                                onFragmentInteractionListener.onRadioButtonChoice(NO);
                                 break;
                             default: // No choice made.
                                 // Do nothing.
+                                userRadioButtonChoice = NONE;
+                                onFragmentInteractionListener.onRadioButtonChoice(NONE);
                                 break;
                         }
                     }
@@ -83,6 +94,17 @@ public class SimpleFragment extends Fragment {
 
         // Return the View for the fragment's UI.
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // make sure the actiivty implemented the interface
+        if (context instanceof OnFragmentInteractionListener) {
+            onFragmentInteractionListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + getResources().getString(R.string.exception_message));
+        }
     }
 
     public static SimpleFragment newInstance() {

@@ -68,3 +68,6 @@ fastlane/readme.md
 node_modules/
 package-lock.json
 package.json
+
+#annoying little studio files
+.idea/vcs.xml
